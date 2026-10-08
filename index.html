@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#315d3b">
+  <title>TouchGrass AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="navbar">
+    <div class="brand"><div class="brand-icon">🌱</div><span>TouchGrass</span><span class="ai-badge">AI</span></div>
+    <div class="status"><span class="status-dot"></span> Local AI</div>
+  </header>
+
+  <main id="homeScreen" class="screen active">
+    <section class="hero">
+      <div class="hero-badge"><span>✦</span> Powered by open-source AI</div>
+      <h1>AI that tells you <span>to stop using AI.</span></h1>
+      <p class="hero-description">Tell us how much time you have. We'll create a real-world mission that gets you outside.</p>
+    </section>
+
+    <section class="setup-card">
+      <div class="section-label"><span>01</span> HOW MUCH TIME?</div>
+      <div class="choice-grid time-options">
+        <button class="choice active" data-time="15 minutes"><strong>15</strong><span>min</span></button>
+        <button class="choice" data-time="30 minutes"><strong>30</strong><span>min</span></button>
+        <button class="choice" data-time="60 minutes"><strong>60</strong><span>min</span></button>
+        <button class="choice" data-time="2 hours"><strong>2</strong><span>hours</span></button>
+      </div>
+
+      <div class="section-label second"><span>02</span> WHAT SOUNDS GOOD?</div>
+      <div class="activity-grid">
+        <button class="activity active" data-activity="surprise me"><span class="activity-icon">🎲</span><span>Surprise Me</span></button>
+        <button class="activity" data-activity="walking"><span class="activity-icon">🚶</span><span>Walking</span></button>
+        <button class="activity" data-activity="nature"><span class="activity-icon">🌳</span><span>Nature</span></button>
+        <button class="activity" data-activity="photography"><span class="activity-icon">📸</span><span>Photography</span></button>
+        <button class="activity" data-activity="fitness"><span class="activity-icon">🏃</span><span>Fitness</span></button>
+        <button class="activity" data-activity="exploration"><span class="activity-icon">🧭</span><span>Exploration</span></button>
+      </div>
+
+      <div class="section-label second"><span>03</span> DIFFICULTY</div>
+      <div class="difficulty-options">
+        <button class="difficulty active" data-difficulty="easy">Easy</button>
+        <button class="difficulty" data-difficulty="medium">Medium</button>
+        <button class="difficulty" data-difficulty="challenging">Challenging</button>
+      </div>
+
+      <button id="generateBtn" class="generate-btn"><span class="generate-icon">✦</span><span id="generateText">Generate My Mission</span><span class="arrow">→</span></button>
+      <div class="privacy-note">🔒 Your prompt stays on your machine. AI runs locally through Ollama.</div>
+    </section>
+  </main>
+
+  <section id="loadingScreen" class="screen loading-screen">
+    <div class="loader-orbit"><div class="loader-dot"></div></div>
+    <h2>Creating your escape...</h2>
+    <p>Your local AI is designing something worth leaving the house for.</p>
+    <div class="loading-terminal">
+      <div>› reading preferences</div>
+      <div>› planning outdoor activity</div>
+      <div>› minimizing screen time</div>
+      <div class="terminal-active">› generating mission_</div>
+    </div>
+  </section>
+
+  <section id="missionScreen" class="screen">
+    <div class="mission-header"><button id="backBtn" class="back-btn">← Back</button><div class="mission-label">AI GENERATED MISSION</div></div>
+    <div class="mission-card">
+      <div class="mission-top"><div class="mission-number">MISSION <span id="missionNumber">#01</span></div><div class="difficulty-pill" id="missionDifficulty">MEDIUM</div></div>
+      <h2 id="missionTitle">The Hidden Green</h2>
+      <p id="missionDescription">Your AI-generated adventure awaits.</p>
+      <div class="mission-stats">
+        <div class="mission-stat"><span>⏱</span><div><small>TIME</small><strong id="missionTime">30 min</strong></div></div>
+        <div class="mission-stat"><span>📍</span><div><small>DISTANCE</small><strong id="missionDistance">~2 km</strong></div></div>
+        <div class="mission-stat"><span>⭐</span><div><small>REWARD</small><strong id="missionXP">+100 XP</strong></div></div>
+      </div>
+      <div class="tasks-title">YOUR QUEST</div>
+      <div id="taskList" class="task-list"></div>
+      <div class="final-challenge"><div class="final-icon">📵</div><div><strong>FINAL CHALLENGE</strong><p id="finalChallenge">Put your phone away for the final five minutes.</p></div></div>
+      <button id="startMissionBtn" class="start-btn">Start Mission <span>→</span></button>
+    </div>
+  </section>
+
+  <section id="activeScreen" class="screen active-mission-screen">
+    <div class="active-content">
+      <div class="outside-label">🌳 OUTSIDE MODE</div>
+      <div class="timer" id="timer">15:00</div>
+      <h2>Your mission has started.</h2>
+      <p>The whole point is to stop looking at this screen.</p>
+      <div class="phone-down"><span>📵</span><strong>PUT YOUR PHONE AWAY</strong><small>Come back when you're done.</small></div>
+      <button id="returnBtn" class="return-btn">I'm Back →</button>
+    </div>
+  </section>
+
+  <section id="completeScreen" class="screen">
+    <div class="complete-container">
+      <div class="success-icon">🌱</div>
+      <div class="complete-label">QUEST COMPLETE</div>
+      <h2>You actually did it.</h2>
+      <p>The AI is proud of you. Probably.</p>
+      <div class="xp-card"><span>MISSION REWARD</span><strong id="earnedXP">+100 XP</strong></div>
+      <div class="stats-row">
+        <div><strong id="totalMissions">1</strong><span>Missions</span></div>
+        <div><strong id="streak">1 🔥</strong><span>Day streak</span></div>
+        <div><strong id="totalMinutes">15</strong><span>Minutes out</span></div>
+      </div>
+      <div class="proof-section">
+        <h3>Want to prove you touched grass?</h3>
+        <p>Optional. Take one photo from your adventure.</p>
+        <label class="photo-upload"><span>📸</span><span>Upload proof</span><input type="file" id="proofInput" accept="image/*"></label>
+        <div id="proofPreview" class="proof-preview"></div>
+      </div>
+      <button id="newMissionBtn" class="new-mission-btn">Get Another Mission →</button>
+    </div>
+  </section>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
